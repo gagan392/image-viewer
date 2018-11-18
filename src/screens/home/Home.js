@@ -52,6 +52,7 @@ class Home extends Component {
             favoriteIconId: 1,
             favoriteIconlikes: 1,
             backgroundColor: "balck",
+            mediaList: []
         }
     }
     likeThePic() {
@@ -62,13 +63,31 @@ class Home extends Component {
         });
         
     }
+    async UNSAFE_componentWillMount() {
+		const token = sessionStorage.getItem("access-token");
+		console.log(" token ", token);
+		if(token === null) {
+			this.props.history.push({
+				pathname: `/`,
+			});
+			return;
+		}
+
+		const { apiClient } = this.props;
+
+		const mediaList = await apiClient.getMdeia();
+		console.log(" Media list ", mediaList);
+		this.setState({
+			mediaList: mediaList.data
+		});
+	}
     render(props) {
 //console.log(moviesData);
         return (
             <div >
                 <SearchAppBar />
                 <GridList cols={3} className="classes.gridListUpcomingMovies" >
-                    {moviesData.map(movie => (
+                {this.state.mediaList.length > 0 && this.state.mediaList.map(movie => (
                         <GridListTile key={movie.id}>
                         
                             <Card className="classes.gridListUpcomingMovies">
