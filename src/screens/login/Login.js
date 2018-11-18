@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router";
 
-import SearchAppBar from './../../common/header/SearchAppBar';
+import HeaderBar from './../../common/header/HeaderBar';
 
 import { Card, CardContent } from "@material-ui/core";
 import { FormControl, InputLabel, Input, Button, FormHelperText } from "@material-ui/core";
@@ -74,7 +74,7 @@ class Login extends Component {
 		const { classes } = this.props;
 		return (
 			<>
-				<SearchAppBar />
+				<HeaderBar />
 				<Card className="cardStyle">
 					<CardContent classes={{ root: classes.contentRoot }}>
 						<Typography variant="headline" component="h2"> LOGIN </Typography><br />
