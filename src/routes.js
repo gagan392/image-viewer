@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Login from "./screens/login/Login";
 import Home from './screens/home/Home';
+import Profile from './screens/profile/Profile';
 
 import ApiClient from "./client/ApiClient";
 
@@ -15,6 +16,7 @@ class Routes extends Component {
 				<div className="main-container">
 					<Route exact path='/' render={(props) => <Login {...props} />} />
 					<Route exact path='/home' render={(props) => <Home apiClient={apiClient} {...props} />} />
+					<Route exact path='/profile' render={(props) => <Profile {...props} />} />
 				</div>
 			</Router>
 		)
