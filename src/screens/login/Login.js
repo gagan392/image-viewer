@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router";
 
-import Header from './../../common/header/Header';
+import SearchAppBar from './../../common/header/SearchAppBar';
 
 import { Card, CardContent } from "@material-ui/core";
 import { FormControl, InputLabel, Input, Button, FormHelperText } from "@material-ui/core";
@@ -44,7 +44,7 @@ class Login extends Component {
 
 	loginButtonClickHandler = () => {
 
-		const username = 'gagan', password = '1234', accessToken = '3302157035.3d32df8.313259d349224c14927b36bc7b697203', currState = this.state;
+		const username = 'gagan', password = '1234', accessToken = '8661035776.d0fcd39.87fd934e04f84253aaf234d8bd4e4c65', currState = this.state;
 		currState.usernameReqdClass = this.state.username === "" ? "dispBlock" : "dispNone";
 		currState.passwordReqdClass = this.state.password === "" ? "dispBlock" : "dispNone";
 		if (this.state.username && this.state.password) {
@@ -74,7 +74,7 @@ class Login extends Component {
 		const { classes } = this.props;
 		return (
 			<>
-				<Header />
+				<SearchAppBar />
 				<Card className="cardStyle">
 					<CardContent classes={{ root: classes.contentRoot }}>
 						<Typography variant="headline" component="h2"> LOGIN </Typography><br />

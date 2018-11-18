@@ -12,8 +12,6 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import { withStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import IconButton from '@material-ui/core/IconButton';
-import moviesData from './dataApi';
-
 
 const styles = theme => ({
 	gridListMain: {
@@ -21,7 +19,8 @@ const styles = theme => ({
 		cursor: 'pointer'
 	},
 	card: {
-		height: 'inherit !important'
+		height: 'inherit !important',
+		margin: '1rem'
 	},
 	gridListImages: {
 		marginTop: '0.5rem !important'
@@ -31,12 +30,28 @@ const styles = theme => ({
 
 class Home extends Component {
 
-	UNSAFE_componentWillMount() {
+	constructor(props) {
+		super(props);
+		this.state = {
+			mediaList: []
+		}
+	}
+	async UNSAFE_componentWillMount() {
 		const token = sessionStorage.getItem("access-token");
 		console.log(" token ", token);
-		if(token === null)
-		this.props.history.push({
-			pathname: `/`,
+		if(token === null) {
+			this.props.history.push({
+				pathname: `/`,
+			});
+			return;
+		}
+
+		const { apiClient } = this.props;
+
+		const mediaList = await apiClient.getMdeia();
+		console.log(" Media list ", mediaList);
+		this.setState({
+			mediaList: mediaList.data
 		});
 	}
 
@@ -44,11 +59,10 @@ class Home extends Component {
 		const { classes } = this.props;
 		return (
 			<div >
-				<SearchAppBar />
+				<SearchAppBar search />
 				<GridList cols={3} className={classes.gridListImages} >
-					{moviesData.map(movie => (
+					{this.state.mediaList.length > 0 && this.state.mediaList.map(movie => (
 						<Card key={movie.id} className={classes.card}>
-
 							<CardContent>
 								<CardHeader
 									avatar={
