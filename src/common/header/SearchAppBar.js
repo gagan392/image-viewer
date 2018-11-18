@@ -11,6 +11,7 @@ import './SearchAppBar.css';
 
 const styles = theme => ({
   root: {
+
 	width: '100%',
 	marginBottom: '0.5rem'
   },
@@ -76,7 +77,9 @@ const styles = theme => ({
 });
 
 function SearchAppBar(props) {
+
   const { classes, search } = props;
+
   return (
     <div className={classes.root} >
       <AppBar position="static" className={classes.darkBackGround}>
@@ -84,25 +87,21 @@ function SearchAppBar(props) {
           <Typography className={classes.title} variant="h6" color="inherit" noWrap>
           Image Viewer
           </Typography>
-		  {
-				search ?
-				<>
-					<div className={classes.grow} />
-					<div className={classes.search}>
-						<div className={classes.searchIcon}>
-						<SearchIcon />
-						</div>
-						<InputBase
-						placeholder="Search…"
-						classes={{
-							root: classes.inputRoot,
-							input: classes.inputInput,
-						}}
-						/>
-					</div>
-				</> :
-				<></>
-		  }
+
+          <div className={classes.grow} />
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+            />
+          </div>
+
         </Toolbar>
       </AppBar>
     </div>

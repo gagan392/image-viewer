@@ -11,7 +11,12 @@ import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { withStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
-import IconButton from '@material-ui/core/IconButton';
+
+import GridListTile from '@material-ui/core/GridListTile';
+import { FormControl, InputLabel, Input, Button, FormHelperText } from "@material-ui/core";
+import moviesData from './dataApi';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder'
+
 
 const styles = theme => ({
 	gridListMain: {
@@ -24,19 +29,41 @@ const styles = theme => ({
 	},
 	gridListImages: {
 		marginTop: '0.5rem !important'
-	}
+    },
+    gridListUpcomingMovies: {
+        flexWrap: 'nowrap',
+        transform: 'translateZ(0)',
+        width: '100%'
+      },
+    media:{
+        display:'flex',
+        height:'100%',
+        transform: 'translateZ(0)',
+        width: '100%'
+    }
 });
 
 
 class Home extends Component {
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			mediaList: []
-		}
-	}
-	async UNSAFE_componentWillMount() {
+    constructor() {
+        super();
+        this.state = {
+            favoriteIconId: 1,
+            favoriteIconlikes: 1,
+            backgroundColor: "balck",
+            mediaList: []
+        }
+    }
+    likeThePic() {
+
+        this.setState({
+            favoriteIconlikes : this.state.favoriteIconlikes + 1,
+            
+        });
+        
+    }
+    async UNSAFE_componentWillMount() {
 		const token = sessionStorage.getItem("access-token");
 		console.log(" token ", token);
 		if(token === null) {
@@ -54,46 +81,71 @@ class Home extends Component {
 			mediaList: mediaList.data
 		});
 	}
+    render(props) {
+//console.log(moviesData);
+        return (
+            <div >
+                <SearchAppBar />
+                <GridList cols={3} className="classes.gridListUpcomingMovies" >
+                {this.state.mediaList.length > 0 && this.state.mediaList.map(movie => (
+                        <GridListTile key={movie.id}>
+                        
+                            <Card className="classes.gridListUpcomingMovies">
+                            
+                                <CardContent style={{height:"200px"}}>
+                                <div className="flexcontainer">
+                                    <CardHeader
+                                        avatar={
+                                            <Avatar aria-label="User" src={movie.user.profile_picture} className={"classes.avatar"}>
 
-	render() {
-		const { classes } = this.props;
-		return (
-			<div >
-				<SearchAppBar search />
-				<GridList cols={3} className={classes.gridListImages} >
-					{this.state.mediaList.length > 0 && this.state.mediaList.map(movie => (
-						<Card key={movie.id} className={classes.card}>
-							<CardContent>
-								<CardHeader
-									avatar={
-										<Avatar aria-label="Recipe" src={movie.user.profile_picture}>
-										</Avatar>
-									}
-									title={movie.user.username}
-									subheader="September 14, 2016"
-								/>
-								<CardMedia
-									component="img"
-									image={movie.images.standard_resolution.url}
-									title={movie.user.full_name}
-								/>
-								<br />
-								<Typography>
-									{movie.caption.text}
-								</Typography>
+                                            </Avatar>
+                                        }
+                                        title={movie.user.username}
+                                        subheader="September 14, 2016"
+                                    />
+                                    </div>
+                                    <div className="flexcontainer">
+                                    <CardMedia
+                                        //component="img"
+                                        className={"classes.media"}
+                                        image={movie.images.standard_resolution.url}
+                                        title={movie.user.full_name}
 
-							</CardContent>
-							<br />
-							<CardActions>
-								<IconButton aria-label="Add to favorites">
-									<FavoriteIcon />
-								</IconButton>
-							</CardActions>
-						</Card>
-					))}
-				</GridList>
-			</div>
-		)
-	}
+                                    />
+                                    </div>
+                                    <br />
+                                    <div className="flexcontainer">
+                                    <Typography variant="caption" color="default">
+                                        {movie.caption.text}
+                                    </Typography>
+                                    <div><span className="inlineObjects">
+                                    <FavoriteBorder id="likeButton"
+                                    onClick={this.likeThePic.bind(this)}>
+                                    </FavoriteBorder>
+                                    <Typography variant="caption" className={"classes.textForLike"}>
+                                        <span>{this.state.favoriteIconlikes} likes</span>
+                                    </Typography>
+
+                                    </span></div>
+                                    </div>
+                                </CardContent>
+                                <CardActions>
+                                <FormControl>
+							<InputLabel htmlFor="comment">Add a comment</InputLabel>
+							<Input id="comment"/>
+							<FormHelperText>
+								<span className="textColorBlue">Add</span>
+							</FormHelperText>
+						</FormControl>
+                                <Button variant="contained" color="primary" > ADD </Button>
+                                </CardActions>
+                            </Card>
+                            
+                        </GridListTile>
+                    ))}
+                </GridList>
+            </div>
+        )
+    }
 }
 export default withStyles(styles)(Home);
