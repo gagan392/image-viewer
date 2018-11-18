@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withRouter } from "react-router";
+
 import Header from './../../common/header/Header';
 
 import { Card, CardContent } from "@material-ui/core";
@@ -42,7 +44,7 @@ class Login extends Component {
 
 	loginButtonClickHandler = () => {
 
-		const username = 'gagan', password = '1234asdf', accessToken = '3302157035.3d32df8.313259d349224c14927b36bc7b697203Î', currState = this.state;
+		const username = 'gagan', password = '1234', accessToken = '3302157035.3d32df8.313259d349224c14927b36bc7b697203', currState = this.state;
 		currState.usernameReqdClass = this.state.username === "" ? "dispBlock" : "dispNone";
 		currState.passwordReqdClass = this.state.password === "" ? "dispBlock" : "dispNone";
 		if (this.state.username && this.state.password) {
@@ -60,6 +62,11 @@ class Login extends Component {
 		}
 
 		sessionStorage.setItem("access-token", accessToken);
+
+		this.props.history.push({
+			pathname: `/home`,
+			state: this.state
+		});
 
 	}
 
@@ -102,4 +109,4 @@ class Login extends Component {
 	}
 }
 
-export default withStyles(styles)(Login);
+export default withRouter(withStyles(styles)(Login));
