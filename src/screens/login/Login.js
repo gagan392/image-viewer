@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Header from './../../common/header/Header';
-
+import Home from './../../screens/home/Home';
 import { Card, CardContent } from "@material-ui/core";
 import { FormControl, InputLabel, Input, Button, FormHelperText } from "@material-ui/core";
 import { Typography, withStyles } from "@material-ui/core";
+import ReactDOM from 'react-dom';
 
 import './Login.css';
 
@@ -42,24 +43,33 @@ class Login extends Component {
 
 	loginButtonClickHandler = () => {
 
-		const username = 'gagan', password = '1234asdf', accessToken = '3302157035.3d32df8.313259d349224c14927b36bc7b697203Î', currState = this.state;
+		const username = 'gagan', password = '1234', accessToken = '3302157035.3d32df8.313259d349224c14927b36bc7b697203Î', currState = this.state;
 		currState.usernameReqdClass = this.state.username === "" ? "dispBlock" : "dispNone";
 		currState.passwordReqdClass = this.state.password === "" ? "dispBlock" : "dispNone";
 		if (this.state.username && this.state.password) {
 			currState.credentialsIncorrectClass = this.state.username !== username || this.state.password !== password ? "dispBlock" : "dispNone";
+			
 		}
 		this.setState(currState);
 
 
 		if (!this.state.username || !this.state.password) {
+			
 			return;
 		}
 
 		if (this.state.username !== username || this.state.password !== password) {
+			
 			return;
 		}
 
 		sessionStorage.setItem("access-token", accessToken);
+		console.log("The user ID and password are valid hence the user logged in")
+		
+		ReactDOM.render(
+			<Home/>,
+			document.getElementById('root')
+		);
 
 	}
 
