@@ -1,6 +1,8 @@
 .imgLayout {
     height: 100%;
+
     width: "auto";
+
 }
 ::-webkit-scrollbar {
     width: 4px;
@@ -57,7 +59,6 @@ display:flex;
         margin:8px;
     }
 
-
   }
 
   .inlineObjects{
@@ -76,4 +77,3 @@ display:flex;
     display: flex;
     flex-direction: column;
   }
-

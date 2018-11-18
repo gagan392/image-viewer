@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { withStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
+
 import GridListTile from '@material-ui/core/GridListTile';
 import { FormControl, InputLabel, Input, Button, FormHelperText } from "@material-ui/core";
 import moviesData from './dataApi';
@@ -44,6 +45,7 @@ const styles = theme => ({
 
 
 class Home extends Component {
+
     constructor() {
         super();
         this.state = {
