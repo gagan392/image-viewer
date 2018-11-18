@@ -103,7 +103,6 @@ class Login extends Component {
 							<span className="textColorRed">Incorrect username and/or password</span>
 							<br /><br />
 						</div>
-
 						<Button variant="contained" color="primary" onClick={this.loginButtonClickHandler}> Login </Button>
 					</CardContent>
 				</Card>
