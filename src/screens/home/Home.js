@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import SearchAppBar from './../../common/header/SearchAppBar';
 import './Home.css';
-
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import { withStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import FormControl from '@material-ui/core/FormControl';
-import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import moviesData from './dataApi';
@@ -25,18 +25,6 @@ const styles = theme => ({
     root: {
         flexGrow: 1,
         backgroundColor: theme.palette.background.paper
-    },
-    upcomingMoviesHeading: {
-        textAlign: 'center',
-        background: '#ff9999',
-        padding: '8px',
-        fontSize: '1rem'
-    },
-
-    gridListUpcomingMovies: {
-        flexWrap: 'nowrap',
-        transform: 'translateZ(0)',
-        width: '100%'
     },
     gridListMain: {
 
@@ -49,12 +37,37 @@ const styles = theme => ({
     },
     title: {
         color: theme.palette.primary.light,
-    }
+    },
+    card: {
+        maxWidth: 245,
+    },
+    media: {
+
+        height: 0,
+        paddingTop: '56.25%', // 16:9,
+
+    },
+    actions: {
+        display: 'flex',
+        
+    },
+    expand: {
+        transform: 'rotate(0deg)',
+        transition: theme.transitions.create('transform', {
+            duration: theme.transitions.duration.shortest,
+        }),
+        marginLeft: 'auto',
+        [theme.breakpoints.up('sm')]: {
+            marginRight: -8,
+        },
+    },
+    expandOpen: {
+        transform: 'rotate(180deg)',
+    },
+    avatar: {
+        
+    },
 });
-
-
-
-
 
 
 class Home extends Component {
@@ -64,11 +77,41 @@ class Home extends Component {
         return (
             <div >
                 <SearchAppBar />
-                <GridList cols={3} className="classes.gridListUpcomingMovies">
-                    {moviesData.map(movie =>(
+                <GridList cols={3} className="classes.gridListUpcomingMovies" >
+                    {moviesData.map(movie => (
                         <GridListTile key={movie.id}>
-                            <img src={movie.images.standard_resolution.url} className="classes.mposter"/>
-                            <GridListTileBar title={movie.caption.text}/>
+                            <Card className={"classes.card"}>
+
+                                <CardContent>
+                                    <CardHeader
+                                        avatar={
+                                            <Avatar aria-label="Recipe" src={movie.user.profile_picture} className={"classes.avatar"}>
+
+                                            </Avatar>
+                                        }
+                                        title={movie.user.username}
+                                        subheader="September 14, 2016"
+                                    />
+                                    <CardMedia
+                                        component="img"
+                                        className={"classes.media"}
+                                        image={movie.images.standard_resolution.url}
+                                        title={movie.user.full_name}
+                                        
+                                    />
+                                    <br />
+                                    <Typography>
+                                        {movie.caption.text}
+                                    </Typography>
+
+                                </CardContent>
+                                <br />
+                                <CardActions>
+                                    <IconButton aria-label="Add to favorites">
+                                        <FavoriteIcon />
+                                    </IconButton>
+                                </CardActions>
+                            </Card>
                         </GridListTile>
                     ))}
                 </GridList>
